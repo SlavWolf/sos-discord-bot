@@ -1,0 +1,10 @@
+configs/*.ini
+!configs/*example.ini
+db/
+
+venv/
+.idea/
+__pycache__
+
+cogs/trash
+src/
