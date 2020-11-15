@@ -22,26 +22,31 @@ def template_description(rank: str):
 
 
 def get_similar_tournaments(name: str):
+    """Search for tournaments that startswith 'name' and return first entry"""
     rs = (session.query(func.count(tournament.name))
           .filter(tournament.c.name.startswith(name)))
     return rs[0][0]
 
 
 def add_new_tournament(id: int, name: str, guild_id: str, channel_id: str, message_id: str):
+    """Add new tournament to DB"""
     tournament.insert().values(id=id, name=name, guild_id=guild_id, channel_id=channel_id,
                                message_id=message_id).execute()
 
 
 def add_participant(id: int, tournament_id: int, name: str, discord_id: int):
+    """Add new participant to DB"""
     participant.insert().values(id=id, tournament_id=tournament_id, name=name, discord_id=discord_id).execute()
 
 def delete_tournament_by_name(name: str):
+    """Delete tournament from DB"""
     id = get_tournament_id(name)
     tournament.delete(tournament.c.name == name).execute()
     return id
 
 
 def get_tournament_id(name: str):
+    """Get tournament ID from DB by name"""
     q = select([tournament.c.id, tournament.c.name]).where(tournament.c.name == name)
     rs = session.execute(q).fetchone()
     return rs[0]
