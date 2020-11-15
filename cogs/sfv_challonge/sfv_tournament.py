@@ -1,7 +1,8 @@
+"""Main cog file for challonge cog"""
 from configparser import ConfigParser
 import json
 import random
-import datetime
+import sqlite3
 
 from discord.ext import commands
 import discord
@@ -9,7 +10,6 @@ import challonge
 import requests
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
-import sqlite3
 
 from cogs.sfv_challonge.init_tournament_db import Base
 
@@ -105,8 +105,6 @@ class SFVTournamentCog(commands.Cog):
         Creating new tournament:
         > tournament create 07-10-2020 20:30 Gold-Plat
         Signing in to tournament:
-        > tournament signin <tournament_id>
-        Check-in into tournament:
         > tournament checkin <tournament_id>"""
         if ctx.invoked_subcommand is None:
             await ctx.send('Invalid sub command passed...')
